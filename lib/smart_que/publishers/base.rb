@@ -1,5 +1,5 @@
 module SmartQue
-  module Publisher
+  module Publishers
     class Base
       # List Queues from configuration
       def queue_list

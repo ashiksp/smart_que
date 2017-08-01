@@ -1,5 +1,7 @@
+require_relative "publishers/base"
+
 module SmartQue
-  class Publisher < Publisher::Base
+  class Publisher < Publishers::Base
     
     # Initialize
     def initialize
