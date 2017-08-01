@@ -5,9 +5,8 @@ module SmartQue
     
     # Initialize
     def initialize
-      @channel = channel
       queue_list.each do |q_name|
-        q = get_queue(q_name, @channel)
+        q = get_queue(q_name)
         q.bind(x_direct, routing_key: q.name)
       end
     end
