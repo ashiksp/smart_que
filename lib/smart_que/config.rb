@@ -32,7 +32,7 @@ module SmartQue
     private
 
     def load_configuration_from_yml
-      if File.exists? 'config/smart_que.yml'
+      if File.exist? 'config/smart_que.yml'
         @config = YAML.load(File.read('config/smart_que.yml')) || @config
       end
     end
