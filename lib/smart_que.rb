@@ -1,5 +1,6 @@
 require "smart_que/version"
 require "smart_que/config"
+require "smart_que/publisher"
 
 require "bunny"
 require "yaml"
