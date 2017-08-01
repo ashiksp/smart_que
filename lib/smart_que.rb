@@ -7,6 +7,7 @@ require "bunny"
 require "yaml"
 require "json"
 require "logger"
+require 'fileutils'
 
 module SmartQue
   # Methods related to configurations
@@ -41,7 +42,7 @@ module SmartQue
       if config.logger
         @logger = config.logger
       else
-        logfile = config.logfile || "log/smart_que.log"
+        logfile = config.logfile || default_log_file
         @logger = Logger.new(logfile, 'weekly')
       end
     end
@@ -52,5 +53,14 @@ module SmartQue
     @logger ||= proc.call
 
     @logger.info(data.inspect)
+  end
+
+  def self.default_log_file
+    log_file = "log/smart_que.log"
+    dir = File.dirname(log_file)
+    unless File.directory?(dir)
+      FileUtils.mkdir_p(dir)
+    end
+    log_file
   end
 end
