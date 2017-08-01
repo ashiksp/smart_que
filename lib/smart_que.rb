@@ -16,4 +16,18 @@ module SmartQue
     yield(config) if block_given?
     config
   end
+
+  # Establish bunny connection
+  def self.establish_connection
+    return @conn if @conn
+
+    @conn ||= Bunny.new(
+      host: config.host,
+      port: config.port,
+      username: config.username,
+      password: config.password)
+
+    @conn.start
+    @conn
+  end
 end
