@@ -30,4 +30,25 @@ module SmartQue
     @conn.start
     @conn
   end
+
+  # Logger
+  def self.log(data)
+    env = ENV['RAILS_ENV'] || config.env
+
+    proc = Proc.new do
+      if config.logger
+        @logger = config.logger
+      else
+        logfile = config.logfile || "log/smart_que.log"
+        @logger = Logger.new(logfile, 'weekly')
+      end
+    end
+
+
+    return if (env == 'testing' or env == 'test')
+
+    @logger ||= proc.call
+
+    @logger.info(data.inspect)
+  end
 end
