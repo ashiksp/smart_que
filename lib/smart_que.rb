@@ -2,6 +2,7 @@ require "smart_que/version"
 require "smart_que/config"
 require "smart_que/errors"
 require "smart_que/publisher"
+require "smart_que/consumer"
 
 require "bunny"
 require "yaml"
