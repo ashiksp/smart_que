@@ -32,6 +32,10 @@ module SmartQue
         ::SmartQue.log(data)
       end
 
+      def config
+        ::SmartQue.config
+      end
+
       private
 
       def modified_q_name(q_name)

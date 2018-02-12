@@ -28,6 +28,10 @@ module Consumers
       @channel ||= connection.create_channel
     end
 
+    def config
+      ::SmartQue.config
+    end
+
     # Method which kick start the consumer process thread
     def start
       channel.prefetch(10)

@@ -13,9 +13,9 @@ module SmartQue
       end
     end
 
-    describe '#connection' do
+    let(:consumer) { SmartQue::Consumer.new('test_queue') }
 
-      let(:consumer) { SmartQue::Consumer.new('test_queue') }
+    describe '#connection' do
 
       it 'creates connection' do
         assert consumer.connection
@@ -27,6 +27,40 @@ module SmartQue
 
       it 'sets consumer queue as test_queue' do
         assert_equal consumer.queue_name, 'test_queue'
+      end
+
+      it 'has a queue' do
+        assert consumer.queue
+      end
+
+      it 'loads proper configuration' do
+        assert consumer.config.class, SmartQue::Config
+      end
+    end
+
+    describe '#message consumption from queue' do
+
+      it 'fetch messages from queue for consumption' do
+
+        consumer.stubs(:wait_for_threads).returns(nil)
+        content = { msisdn: "123456789", message: "Test Message" }
+
+        # Delete all messages from queue
+        consumer.queue.purge
+
+        100.times do
+          consumer.queue.publish(content.to_json)
+        end
+
+        # wait for all the messages to reach the queue
+        sleep 1
+        assert_equal 100, consumer.queue.message_count
+
+        consumer.start
+
+        # Allow consumer to fetch all messages
+        sleep 1
+        assert_equal 0, consumer.queue.message_count
       end
     end
   end
