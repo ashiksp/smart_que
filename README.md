@@ -60,6 +60,10 @@ to publish messages to the RabbitMq server.
 $publisher.publish('sms_otp', { number: '+919898123123', message: 'Test Message' })
 ```
 
+## SmartQue Consumer
+
+Need to update this section
+
 
 ## Development
 
