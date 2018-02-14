@@ -23,7 +23,8 @@ Or install it yourself as:
 
 1. Setup [RabbitMq](https://www.rabbitmq.com/#getstarted)
 2. Add `smart-que` gem to your Gemfile and perform bundle install
-3. Create Publisher/Consumer classes & start publish/consume messages
+3. Require `smart_que` in the application.rb file
+4. Create Publisher/Consumer classes & start publish/consume messages
 
 ## SmartQue Publisher
 
@@ -32,7 +33,7 @@ server. All messages are converted to JSON format before publishing to the queue
 RabbitMq server details and queue lists can be configured as follows
 
 ```
-file: config/initializers/smart_que.rb
+# File: config/initializers/smart_que.rb
 
 SmartQue.configure do |f|
   f.host = ENV[:rabbit_mq][:host']
@@ -49,6 +50,10 @@ end
 
 $publisher = SmartQue::Publisher.new
 
+# Add this below mentioned line to your application.rb
+# File : config/application.rb
+
+require 'smart_que'
 ```
 
 After initializing SmartQue publisher, it can be accessed anywhere in the rails application
@@ -65,12 +70,13 @@ listening to a defined Queue. The queue name and `run` method should be defined 
 in each consumer class.
 
 ```
-Class OtpSmsConsumer < SmartQue::Consumer
+class OtpSmsConsumer < SmartQue::Consumer
   QUEUE_NAME = 'sms.otp'
 
   def run(payload)
     # Payload: { number: '+919898123123', message: 'Test Message' }
     # Method implementation goes here
+    puts payload
   end
 end
 ```
@@ -102,6 +108,18 @@ end
 # Task can be initiated by rake
 RAILS_ENV=staging bundle exec rake rabbitmq:send_otp_sms
 ```
+
+## RabbitMq Web Interface
+
+You can enable rabbitmq_management plugin so that rabbitmq server informations
+are viewed and managed via web console interface. Management plugin can be enabled
+by running this command and can be accessed through [web browser](localhost:15672)
+
+```
+rabbitmq-plugins enable rabbitmq_management
+```
+
+More informations are available on RabbitMq [management plugin documentations](https://www.rabbitmq.com/management.html).
 
 ## Development
 
