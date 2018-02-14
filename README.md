@@ -21,8 +21,6 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
 1. Setup [RabbitMq](https://www.rabbitmq.com/#getstarted)
 2. Add `smart-que` gem to your Gemfile and perform bundle install
 3. Create Publisher/Consumer classes & start publish/consume messages
