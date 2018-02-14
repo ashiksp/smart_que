@@ -62,8 +62,48 @@ $publisher.publish('sms_otp', { number: '+919898123123', message: 'Test Message'
 
 ## SmartQue Consumer
 
-Need to update this section
+The consumer class should be inherited from SmartQue::Consumer, and each consumer will be
+listening to a defined Queue. The queue name and `run` method should be defined properly
+in each consumer class.
 
+```
+Class OtpSmsConsumer < SmartQue::Consumer
+  QUEUE_NAME = 'sms.otp'
+
+  def run(payload)
+    # Payload: { number: '+919898123123', message: 'Test Message' }
+    # Method implementation goes here
+  end
+end
+```
+
+Note that, queue name words are separated by `.` while defining it with consumer class.
+Consumer can be started by calling `start` method available for consumer instance as follows
+
+```
+c = OtpSmsConsumer.new
+c.start
+```
+
+All consumer processes can be placed in a rake file, so that it can be started individually
+with rake tasks.
+
+```
+File : lib/tasks/consumer.rake
+
+# Tasks which related to rabbitmq broker.
+namespace :rabbitmq do
+
+  desc "Run OTP sms worker"
+  task :send_otp_sms => [:environment] do
+    c = OtpSmsConsumer.new
+    c.start
+  end
+end
+
+# Task can be initiated by rake
+RAILS_ENV=staging bundle exec rake rabbitmq:send_otp_sms
+```
 
 ## Development
 
