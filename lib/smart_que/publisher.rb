@@ -14,20 +14,20 @@ module SmartQue
     # Instance methods
 
     # Publish message to the respective queue
-    def publish(queue, options = {})
+    def publish(queue, payload = {})
       # Check queue name includes in the configured list
       # Return if queue doesn't exist
       if queue_list.include? queue
         # Publish sms to queue
         x_direct.publish(
-                          options.to_json,
+                          payload.to_json,
                           mandatory: true,
                           routing_key: get_queue(queue).name
                         )
-        log_message("Publish status: success, Queue : #{queue}, Content : #{options}")
+        log_message("Publish status: success, Queue : #{queue}, Content : #{payload}")
       else
         log_message("Publish status: failed, Queue(#{queue}) doesn't exist.")
-        log_message("Content : #{options}")
+        log_message("Content : #{payload}")
         raise QueueNotFoundError
       end
     end
