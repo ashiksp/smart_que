@@ -31,5 +31,15 @@ module SmartQue
         raise QueueNotFoundError
       end
     end
+
+
+    # Multi-cast message to queues based on topic subscription
+    def multicast(topic, payload = {})
+      x_topic.publish(
+        payload.to_json,
+        routing_key: dot_formatted(topic)
+      )
+      log_message("Multi-cast status: success, Topic : #{topic}, Content : #{payload}")
+    end
   end
 end

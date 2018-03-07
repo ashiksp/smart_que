@@ -16,6 +16,11 @@ module SmartQue
         @x_direct ||= channel.direct("amq.direct")
       end
 
+      # Topic exchange
+      def x_topic
+        @x_topic ||= channel.topic("amq.topic")
+      end
+
       # Connection Object
       def connection
         ::SmartQue.establish_connection
