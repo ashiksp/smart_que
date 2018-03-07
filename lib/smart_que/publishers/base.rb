@@ -13,7 +13,7 @@ module SmartQue
 
       # Direct exchange
       def x_direct
-        @x_direct ||= channel.direct("smartque.direct")
+        @x_direct ||= channel.direct("amq.direct")
       end
 
       # Connection Object
