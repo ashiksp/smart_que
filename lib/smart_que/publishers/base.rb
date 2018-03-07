@@ -39,7 +39,11 @@ module SmartQue
       private
 
       def modified_q_name(q_name)
-        q_name.downcase.sub('_','.')
+        dot_formatted(q_name)
+      end
+
+      def dot_formatted(name_string)
+        name_string.downcase.gsub(/[\/|\_]/,".")
       end
     end
   end
