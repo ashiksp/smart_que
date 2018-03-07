@@ -8,7 +8,7 @@ to publish and consume messages with defined queues.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'smart-que'
+gem 'smart-que', '~> 0.2.0'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install smart-que
+    $ gem install smart-que -v 0.2.0
 
 ## Usage
 
