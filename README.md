@@ -66,12 +66,33 @@ $publisher.publish('sms_otp', { number: '+919898123123', message: 'Test Message'
 
 ## SmartQue unicast
 
+```
+$publisher.unicast(queue_name, payload)
+```
+
 The `unicast` method will provide an option to publish message to any queue which are
-not predefined with initialization configuration. The `queue` parameter can be any queue
+not predefined with initialization configuration. The `queue_name` parameter can be any queue
 name, which will be created and bind to direct exchange instantly if doesn't exist.
 
 ```
 $publisher.unicast('sms_alert', { number: '+919898123123', message: 'Test Message' })
+```
+
+
+
+## SmartQue multicast
+
+```
+$publisher.multicast(topic_name, payload)
+```
+
+The `multicast` method will provide an option to multicast message to queues which are
+not predefined with initialization configuration. The `topic_name` parameter can be any
+topic name and message will be consumable by any queues which subscribe to this topic
+name.
+
+```
+$publisher.multicast('weather', { message: 'Test Message' })
 ```
 
 
