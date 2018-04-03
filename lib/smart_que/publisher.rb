@@ -38,7 +38,7 @@ module SmartQue
 
       x_direct.publish(
         payload.to_json,
-        routing_key: get_queue(queue).name
+        routing_key: get_queue(q_name).name
       )
       log_message("Uni-cast status: success, Queue : #{q_name}, Content : #{payload}")
     end

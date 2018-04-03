@@ -94,5 +94,27 @@ module SmartQue
         queue.purge
       end
     end
+
+
+    describe '#unicast' do
+
+      let(:options) { { msisdn: "123456789", message: "Test Message" } }
+      let(:publisher) { SmartQue::Publisher.new }
+
+      it 'publish the message to the queue' do
+
+        queue = publisher.get_queue("test_queue")
+        queue.purge
+
+        100.times do
+          publisher.unicast('test_queue', options)
+        end
+
+        # wait for all the messages to reach the queue
+        sleep 1
+        assert_equal 100, queue.message_count
+        queue.purge
+      end
+    end
   end
 end
