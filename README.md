@@ -63,6 +63,18 @@ to publish messages to the RabbitMq server.
 $publisher.publish('sms_otp', { number: '+919898123123', message: 'Test Message' })
 ```
 
+
+## SmartQue unicast
+
+The `unicast` method will provide an option to publish message to any queue which are
+not predefined with initialization configuration. The `queue` parameter can be any queue
+name, which will be created and bind to direct exchange instantly if doesn't exist.
+
+```
+$publisher.unicast('sms_alert', { number: '+919898123123', message: 'Test Message' })
+```
+
+
 ## SmartQue Consumer
 
 The consumer class should be inherited from SmartQue::Consumer, and each consumer will be
