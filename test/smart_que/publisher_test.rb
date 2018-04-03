@@ -101,7 +101,7 @@ module SmartQue
       let(:options) { { msisdn: "123456789", message: "Test Message" } }
       let(:publisher) { SmartQue::Publisher.new }
 
-      it 'publish the message to the queue' do
+      it 'unicast the message to the queue' do
 
         queue = publisher.get_queue("test_queue")
         queue.purge
@@ -114,6 +114,34 @@ module SmartQue
         sleep 1
         assert_equal 100, queue.message_count
         queue.purge
+      end
+    end
+
+    describe '#multicast' do
+
+      let(:options) { { msisdn: "123456789", message: "Test Message" } }
+      let(:publisher) { SmartQue::Publisher.new }
+
+      it 'multicast the message to the topic smart.queue' do
+
+        queue_1 = publisher.get_queue("test_queue_1")
+        queue_1.bind(publisher.x_topic, routing_key: 'smart.queue')
+        queue_1.purge
+
+        queue_2 = publisher.get_queue("test_queue_2")
+        queue_2.bind(publisher.x_topic, routing_key: 'smart.*')
+        queue_2.purge
+
+        100.times do
+          publisher.multicast('smart_queue', options)
+        end
+
+        # wait for all the messages to reach the queue
+        sleep 1
+        assert_equal 100, queue_1.message_count
+        assert_equal 100, queue_2.message_count
+        queue_1.purge
+        queue_2.purge
       end
     end
   end
