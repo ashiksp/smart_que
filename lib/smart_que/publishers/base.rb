@@ -26,6 +26,11 @@ module SmartQue
         ::SmartQue.establish_connection
       end
 
+      def find_or_initialize_queue(q_name)
+        q = get_queue(q_name)
+        q.bind(x_direct, routing_key: q.name)
+      end
+
       # Get/Set queue with name
       # name : sms_otp
       def get_queue(q_name)

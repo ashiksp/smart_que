@@ -6,8 +6,7 @@ module SmartQue
     # Initialize
     def initialize
       queue_list.each do |q_name|
-        q = get_queue(q_name)
-        q.bind(x_direct, routing_key: q.name)
+        find_or_initialize_queue(q_name)
       end
     end
 
@@ -30,6 +29,18 @@ module SmartQue
         log_message("Content : #{payload}")
         raise QueueNotFoundError
       end
+    end
+
+    # Uni-cast message to queues
+    def unicast(q_name, payload = {})
+      # Initialize queue if doesn't exist
+      find_or_initialize_queue(q_name)
+
+      x_direct.publish(
+        payload.to_json,
+        routing_key: get_queue(queue).name
+      )
+      log_message("Uni-cast status: success, Queue : #{q_name}, Content : #{payload}")
     end
 
 
