@@ -16,6 +16,7 @@ class SmartQueTest < Minitest::Test
       SmartQue.configure do |f|
         f.host = 'localhost'
         f.port = '5672'
+        f.vhost = 'test'
         f.username = 'guest'
         f.password = "guest"
         f.queues = ['push_default', 'sms_otp']
@@ -26,6 +27,10 @@ class SmartQueTest < Minitest::Test
 
       it 'loads the default configuration' do
         assert_equal SmartQue.config.host, 'localhost'
+      end
+
+      it 'loads the vhost configuration' do
+        assert_equal SmartQue.config.vhost, 'test'
       end
 
       it 'allow to add custom configuration' do
