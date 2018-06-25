@@ -28,6 +28,7 @@ module SmartQue
     @conn ||= Bunny.new(
       host: config.host,
       port: config.port,
+      vhost: config.vhost,
       username: config.username,
       password: config.password)
 

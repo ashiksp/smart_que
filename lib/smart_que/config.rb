@@ -2,7 +2,7 @@ module SmartQue
   class Config
     # Configurations
     # allowed configurations
-    CONFIGURATION = %w(host port queues env username password logfile logger)
+    CONFIGURATION = %w(host vhost port queues env username password logfile logger)
 
     # Initialize
     def initialize

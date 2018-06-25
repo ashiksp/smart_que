@@ -38,6 +38,7 @@ RabbitMq server details and queue lists can be configured as follows
 SmartQue.configure do |f|
   f.host = ENV[:rabbit_mq][:host']
   f.port = ENV[:rabbit_mq][:port']
+  f.vhost = ENV[:rabbit_mq][:vhost']
   f.username = ENV[:rabbit_mq][:username']
   f.password = ENV[:rabbit_mq][:password']
   f.logger = Rails.logger
