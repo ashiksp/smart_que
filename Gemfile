@@ -6,7 +6,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 # Add required gems
-gem "bunny"
+gem "bunny", '~> 2.11.0'
 gem "pry"
 gem 'guard'
 gem 'guard-minitest'
