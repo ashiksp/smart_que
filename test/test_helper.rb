@@ -3,5 +3,5 @@ require "smart_que"
 
 require 'pry'
 require "json"
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'minitest/autorun'
