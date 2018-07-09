@@ -43,7 +43,7 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rake (10.5.0)
+    rake (12.3.1)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -55,15 +55,15 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.15)
+  bundler (~> 1.16.2)
   bunny (~> 2.11.0)
   guard
   guard-minitest
-  minitest (~> 5.0)
+  minitest (~> 5.11.3)
   mocha
   pry
-  rake (~> 10.0)
+  rake (~> 12.3.1)
   smart-que!
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
