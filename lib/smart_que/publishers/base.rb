@@ -1,3 +1,5 @@
+require 'connection_pool'
+
 module SmartQue
   module Publishers
     class Base
@@ -7,8 +9,17 @@ module SmartQue
       end
 
       # Methods related to bunny exchange, channels, queues
+      def channel_pool
+        @channel_pool ||= ConnectionPool.new do
+          connection.start
+          connection.create_channel
+        end
+      end
+
       def channel
-        @channel ||= connection.create_channel
+        channel_pool.with do |channel|
+          channel
+        end
       end
 
       # Direct exchange
