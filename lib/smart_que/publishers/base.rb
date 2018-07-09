@@ -17,19 +17,19 @@ module SmartQue
       end
 
       def channel
-        @channel && !@channel.closed? ? @channel : channel_pool.with do |channel|
+        channel_pool.with do |channel|
           channel
         end
       end
 
       # Direct exchange
       def x_direct
-        @x_direct ||= channel.direct("amq.direct")
+        channel.direct("amq.direct")
       end
 
       # Topic exchange
       def x_topic
-        @x_topic ||= channel.topic("amq.topic")
+        channel.topic("amq.topic")
       end
 
       # Connection Object
