@@ -17,7 +17,7 @@ module SmartQue
       end
 
       def channel
-        channel_pool.with do |channel|
+        @channel ||= channel_pool.with do |channel|
           channel
         end
       end
@@ -44,8 +44,11 @@ module SmartQue
 
       # Get/Set queue with name
       # name : sms_otp
-      def get_queue(q_name)
-        channel.queue(modified_q_name(q_name))
+      def get_queue(q_name, options = {})
+        unless options[:dot_format] == false
+          q_name = modified_q_name(q_name)
+        end
+        channel.queue(q_name)
       end
 
       # Logging

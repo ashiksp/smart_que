@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart-que (0.2.1)
+    smart-que (0.2.2)
       bunny (~> 2.11)
       connection_pool (~> 2.2)
 
