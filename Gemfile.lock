@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    smart-que (0.2.0)
-      bunny (~> 2.11.0)
+    smart-que (0.2.1)
+      bunny (~> 2.11)
 
 GEM
   remote: https://rubygems.org/
@@ -55,14 +55,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16.2)
+  bundler (~> 1.16)
   bunny (~> 2.11.0)
   guard
   guard-minitest
-  minitest (~> 5.11.3)
+  minitest (~> 5.11)
   mocha
   pry
-  rake (~> 12.3.1)
+  rake (~> 12.3)
   smart-que!
 
 BUNDLED WITH
