@@ -41,26 +41,27 @@ module SmartQue
     describe '#message consumption from queue' do
 
       it 'fetch messages from queue for consumption' do
-
-        consumer.stubs(:wait_for_threads).returns(nil)
         content = { msisdn: "123456789", message: "Test Message" }
 
-        # Delete all messages from queue
-        consumer.queue.purge
+        consumer.stub :wait_for_threads, nil do
 
-        100.times do
-          consumer.queue.publish(content.to_json)
+          # Delete all messages from queue
+          consumer.queue.purge
+
+          100.times do
+            consumer.queue.publish(content.to_json)
+          end
+
+          # wait for all the messages to reach the queue
+          sleep 1
+          assert_equal 100, consumer.queue.message_count
+
+          consumer.start
+
+          # Allow consumer to fetch all messages
+          sleep 1
+          assert_equal 0, consumer.queue.message_count
         end
-
-        # wait for all the messages to reach the queue
-        sleep 1
-        assert_equal 100, consumer.queue.message_count
-
-        consumer.start
-
-        # Allow consumer to fetch all messages
-        sleep 1
-        assert_equal 0, consumer.queue.message_count
       end
     end
   end
