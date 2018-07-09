@@ -7,6 +7,10 @@ gemspec
 
 # Add required gems
 gem "bunny", '~> 2.11.0'
+
+# Channel Connections
+gem "connection_pool", '~> 2.2.1'
+
 gem "pry"
 gem 'guard'
 gem 'guard-minitest'

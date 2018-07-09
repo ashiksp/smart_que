@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
 
   # Run time dependencies
   spec.add_runtime_dependency "bunny", "~> 2.11"
+  spec.add_runtime_dependency "connection_pool", "~> 2.2"
 
   # Development Dependencies
   spec.add_development_dependency "bundler", "~> 1.16"

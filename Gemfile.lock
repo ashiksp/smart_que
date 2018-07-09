@@ -3,6 +3,7 @@ PATH
   specs:
     smart-que (0.2.1)
       bunny (~> 2.11)
+      connection_pool (~> 2.2)
 
 GEM
   remote: https://rubygems.org/
@@ -11,6 +12,7 @@ GEM
     bunny (2.11.0)
       amq-protocol (~> 2.3.0)
     coderay (1.1.2)
+    connection_pool (2.2.2)
     ffi (1.9.25)
     formatador (0.2.5)
     guard (2.14.2)
@@ -57,6 +59,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   bunny (~> 2.11.0)
+  connection_pool (~> 2.2.1)
   guard
   guard-minitest
   minitest (~> 5.11)
