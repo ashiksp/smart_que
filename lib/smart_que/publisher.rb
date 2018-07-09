@@ -19,10 +19,10 @@ module SmartQue
       if queue_list.include? queue
         # Publish sms to queue
         x_direct.publish(
-                          payload.to_json,
-                          mandatory: true,
-                          routing_key: get_queue(queue).name
-                        )
+          payload.to_json,
+          mandatory: true,
+          routing_key: get_queue(queue).name
+        )
         log_message("Publish status: success, Queue : #{queue}, Content : #{payload}")
       else
         log_message("Publish status: failed, Queue(#{queue}) doesn't exist.")
