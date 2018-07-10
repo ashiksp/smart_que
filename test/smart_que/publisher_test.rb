@@ -103,7 +103,7 @@ module SmartQue
 
       it 'unicast the message to the queue' do
 
-        queue = publisher.get_queue("test_queue")
+        queue = publisher.get_queue("test")
         queue.purge
 
         100.times do
@@ -124,11 +124,11 @@ module SmartQue
 
       it 'multicast the message to the topic smart.queue' do
 
-        queue_1 = publisher.get_queue("test_queue_1")
+        queue_1 = publisher.get_queue("queue_1")
         queue_1.bind(publisher.x_topic, routing_key: 'smart.queue')
         queue_1.purge
 
-        queue_2 = publisher.get_queue("test_queue_2")
+        queue_2 = publisher.get_queue("queue_2")
         queue_2.bind(publisher.x_topic, routing_key: 'smart.*')
         queue_2.purge
 
@@ -140,6 +140,34 @@ module SmartQue
         sleep 1
         assert_equal 100, queue_1.message_count
         assert_equal 100, queue_2.message_count
+        queue_1.purge
+        queue_2.purge
+      end
+    end
+
+    describe '#broadcast' do
+
+      let(:options) { { msisdn: "123456789", message: "Test Message" } }
+      let(:publisher) { SmartQue::Publisher.new }
+
+      it 'broadcast the message to the topic smart.queue' do
+
+        queue_1 = publisher.get_queue("queue_1")
+        queue_1.bind(publisher.x_fanout)
+        queue_1.purge
+
+        queue_2 = publisher.get_queue("queue_2")
+        queue_2.bind(publisher.x_fanout)
+        queue_2.purge
+
+        10.times do
+          publisher.broadcast(options)
+        end
+
+        # wait for all the messages to reach the queue
+        sleep 1
+        assert_equal 10, queue_1.message_count
+        assert_equal 10, queue_2.message_count
         queue_1.purge
         queue_2.purge
       end
