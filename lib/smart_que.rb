@@ -23,7 +23,7 @@ module SmartQue
 
   # Establish bunny connection
   def self.establish_connection
-    return @conn if @conn
+    return @conn if (@conn && @conn.open?)
 
     @conn ||= Bunny.new(
       host: config.host,

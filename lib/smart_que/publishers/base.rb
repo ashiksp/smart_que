@@ -17,7 +17,7 @@ module SmartQue
       end
 
       def channel
-        @channel ||= channel_pool.with do |channel|
+        channel_pool.with do |channel|
           channel
         end
       end
