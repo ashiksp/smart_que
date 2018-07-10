@@ -5,7 +5,7 @@ module SmartQue
     class Base
       # List Queues from configuration
       def queue_list
-        @queue_list ||= ::SmartQue.config.queues
+        ::SmartQue.config.queues
       end
 
       # Methods related to bunny exchange, channels, queues
@@ -17,7 +17,7 @@ module SmartQue
       end
 
       def channel
-        channel_pool.with do |channel|
+        @channel ||= channel_pool.with do |channel|
           channel
         end
       end
@@ -25,6 +25,10 @@ module SmartQue
       # Direct exchange
       def x_direct
         channel.direct("amq.direct")
+      end
+
+      def x_default
+        channel.default_exchange
       end
 
       # Topic exchange

@@ -33,12 +33,9 @@ module SmartQue
 
     # Uni-cast message to queues
     def unicast(q_name, payload = {})
-      # Initialize queue if doesn't exist
-      find_or_initialize_queue(q_name)
-
-      x_direct.publish(
+      x_default.publish(
         payload.to_json,
-        routing_key: get_queue(q_name).name
+        routing_key: dot_formatted(q_name)
       )
       log_message("Uni-cast status: success, Queue : #{q_name}, Content : #{payload}")
     end
