@@ -11,7 +11,6 @@ module SmartQue
       # Methods related to bunny exchange, channels, queues
       def channel_pool
         @channel_pool ||= ConnectionPool.new do
-          connection.start
           connection.create_channel
         end
       end

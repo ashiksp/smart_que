@@ -23,17 +23,26 @@ module SmartQue
 
   # Establish bunny connection
   def self.establish_connection
-    return @conn if (@conn && @conn.open?)
+    unless @conn_pool
+      @conn_pool = ConnectionPool.new do
+        create_connection
+      end
+    end
 
-    @conn ||= Bunny.new(
+    @conn_pool.with do |conn|
+      conn
+    end
+  end
+
+  def self.create_connection
+    conn = Bunny.new(
       host: config.host,
       port: config.port,
       vhost: config.vhost,
       username: config.username,
-      password: config.password)
-
-    @conn.start
-    @conn
+      password: config.password
+    )
+    conn.start
   end
 
   # Logger

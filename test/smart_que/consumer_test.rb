@@ -7,7 +7,7 @@ module SmartQue
       SmartQue.configure do |f|
         f.host = 'localhost'
         f.port = '5672'
-        f.username = 'guest'
+        f.username = "guest"
         f.password = "guest"
         f.queues = ['push_default', 'sms_otp']
       end
