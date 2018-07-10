@@ -31,23 +31,31 @@ module SmartQue
       end
     end
 
-    # Uni-cast message to queues
+    # unicast message to queues
     def unicast(q_name, payload = {})
       x_default.publish(
         payload.to_json,
         routing_key: dot_formatted(q_name)
       )
-      log_message("Uni-cast status: success, Queue : #{q_name}, Content : #{payload}")
+      log_message("unicast status: success, Queue : #{q_name}, Content : #{payload}")
     end
 
 
-    # Multi-cast message to queues based on topic subscription
+    # multicast message to queues based on topic subscription
     def multicast(topic, payload = {})
       x_topic.publish(
         payload.to_json,
         routing_key: dot_formatted(topic)
       )
-      log_message("Multi-cast status: success, Topic : #{topic}, Content : #{payload}")
+      log_message("multicast status: success, Topic : #{topic}, Content : #{payload}")
+    end
+
+    # broadcast message to queues based on topic subscription
+    def broadcast(payload = {})
+      x_fanout.publish(
+        payload.to_json
+      )
+      log_message("broadcast status: success, Content : #{payload}")
     end
   end
 end

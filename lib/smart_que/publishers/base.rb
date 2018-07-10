@@ -35,6 +35,11 @@ module SmartQue
         channel.topic("amq.topic")
       end
 
+      # Fanout exchange
+      def x_fanout
+        channel.fanout("amq.fanout")
+      end
+
       # Connection Object
       def connection
         ::SmartQue.establish_connection
