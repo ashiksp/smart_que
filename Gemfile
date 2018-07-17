@@ -9,7 +9,7 @@ gemspec
 gem "bunny", '~> 2.11.0'
 
 # Channel Connections
-gem "connection_pool", '~> 2.2.1'
+gem "connection_pool", '~> 2.2.2'
 
 gem "pry"
 gem 'guard'
