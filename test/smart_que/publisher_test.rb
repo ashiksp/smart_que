@@ -107,7 +107,7 @@ module SmartQue
         queue.purge
 
         100.times do
-          publisher.unicast('test_queue', options)
+          publisher.unicast('test', options)
         end
 
         # wait for all the messages to reach the queue
