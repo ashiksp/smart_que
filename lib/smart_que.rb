@@ -22,10 +22,10 @@ module SmartQue
   end
 
   # Establish bunny connection
-  def self.establish_connection
+  def self.establish_connection(options = {})
     unless @conn_pool
       @conn_pool = ConnectionPool.new do
-        create_connection
+        create_connection(options)
       end
     end
 
@@ -34,15 +34,19 @@ module SmartQue
     end
   end
 
-  def self.create_connection
+  def self.create_connection(options = {})
     conn = Bunny.new(
       host: config.host,
       port: config.port,
-      vhost: config.vhost,
+      vhost: fetch_parameters('vhost'),
       username: config.username,
       password: config.password
     )
     conn.start
+  end
+
+  def self.fetch_parameters(parameter, options = {})
+    (options[parameter] || config.send(parameter))
   end
 
   # Logger
