@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart-que (0.2.2)
+    smart-que (0.2.4)
       bunny (~> 2.11)
       connection_pool (~> 2.2)
 
@@ -59,7 +59,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   bunny (~> 2.11.0)
-  connection_pool (~> 2.2.1)
+  connection_pool (~> 2.2.2)
   guard
   guard-minitest
   minitest (~> 5.11)
