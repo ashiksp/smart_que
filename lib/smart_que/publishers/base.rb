@@ -8,17 +8,12 @@ module SmartQue
         ::SmartQue.config.queues
       end
 
-      # Methods related to bunny exchange, channels, queues
-      def channel_pool
-        @channel_pool ||= ConnectionPool.new do
-          connection.create_channel
-        end
-      end
-
       def channel
-        channel_pool.with do |channel|
-          channel
+        # Create new channel if closed
+        if @channel.nil? || @channel.closed?
+          @channel = connection.create_channel
         end
+        @channel
       end
 
       # Direct exchange

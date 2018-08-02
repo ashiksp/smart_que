@@ -25,7 +25,11 @@ module Consumers
 
     # Create channel with the established connection.
     def channel
-      @channel ||= connection.create_channel
+      # Create new channel if closed
+      if @channel.nil? || @channel.closed?
+        @channel = connection.create_channel
+      end
+      @channel
     end
 
     def config
