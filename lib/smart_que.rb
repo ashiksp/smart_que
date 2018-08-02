@@ -30,6 +30,11 @@ module SmartQue
     end
 
     @conn_pool.with do |conn|
+      # Reestablish connection if closed
+      unless conn.open?
+        conn.start
+      end
+      # Return connection object
       conn
     end
   end
