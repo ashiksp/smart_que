@@ -18,12 +18,18 @@ module SmartQue
       # Return if queue doesn't exist
       if queue_list.include? queue
         # Publish sms to queue
-        x_direct.publish(
-          payload.to_json,
-          mandatory: true,
-          routing_key: get_queue(queue).name
-        )
-        log_message("Publish status: success, Queue : #{queue}, Content : #{payload}")
+        begin
+          x_direct.publish(
+            payload.to_json,
+            mandatory: true,
+            routing_key: get_queue(queue).name
+          )
+          log_message("Publish status: success, Queue : #{queue}, Content : #{payload}")
+          :success
+        rescue => ex
+          log_message("Publish error:#{ex.message}")
+          :error
+        end
       else
         log_message("Publish status: failed, Queue(#{queue}) doesn't exist.")
         log_message("Content : #{payload}")
@@ -33,11 +39,17 @@ module SmartQue
 
     # unicast message to queues
     def unicast(q_name, payload = {})
-      x_default.publish(
-        payload.to_json,
-        routing_key: dot_formatted(q_name)
-      )
-      log_message("unicast status: success, Queue : #{q_name}, Content : #{payload}")
+      begin
+        x_default.publish(
+          payload.to_json,
+          routing_key: dot_formatted(q_name)
+        )
+        log_message("unicast status: success, Queue : #{q_name}, Content : #{payload}")
+        :success
+      rescue => ex
+        log_message("Unicast error:#{ex.message}")
+        :error
+      end
     end
 
 
@@ -51,17 +63,23 @@ module SmartQue
         log_message("multicast status: success, Topic : #{topic}, Content : #{payload}")
         :success
       rescue => ex
-        log_message("#{ex.message}")
+        log_message("Multicast error:#{ex.message}")
         :error
       end
     end
 
     # broadcast message to queues based on topic subscription
     def broadcast(payload = {})
-      x_fanout.publish(
-        payload.to_json
-      )
-      log_message("broadcast status: success, Content : #{payload}")
+      begin
+        x_fanout.publish(
+          payload.to_json
+        )
+        log_message("broadcast status: success, Content : #{payload}")
+        :success
+      rescue => ex
+        log_message("Broadcast error:#{ex.message}")
+        :error
+      end
     end
   end
 end
