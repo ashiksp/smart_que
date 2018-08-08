@@ -158,6 +158,12 @@ end
 RAILS_ENV=staging bundle exec rake rabbitmq:send_otp_sms
 ```
 
+## SmartQue Exceptions
+
+SmartQue will not retry automatic connection recovery after rabbitmq connection failure. It raises
+`SmartQue::ConnectionError` when tcp connection failure happens. You can catch this exception to
+identify connection failures and can perform necessary actions upon it.
+
 ## RabbitMq Web Interface
 
 You can enable rabbitmq_management plugin so that rabbitmq server informations
