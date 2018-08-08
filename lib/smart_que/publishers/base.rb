@@ -3,14 +3,20 @@ require 'connection_pool'
 module SmartQue
   module Publishers
     class Base
+
       # List Queues from configuration
       def queue_list
         ::SmartQue.config.queues
       end
 
       def channel
-        # Create new channel if closed
-        if @channel.nil? || @channel.closed?
+        # Raise exception if connection is not_connected or closed
+        if @channel && (!@channel.open? || !@channel.connection.open?)
+          raise ConnectionError
+        end
+
+        # # Create new channel if closed
+        if @channel.nil? # && connection.open?
           @channel = connection.create_channel
         end
         @channel
