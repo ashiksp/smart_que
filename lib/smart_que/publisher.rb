@@ -51,7 +51,7 @@ module SmartQue
         log_message("multicast status: success, Topic : #{topic}, Content : #{payload}")
         :success
       rescue => ex
-        log("#{ex.message}")
+        log_message("#{ex.message}")
         :error
       end
     end
