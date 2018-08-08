@@ -31,8 +31,8 @@ module SmartQue
 
     @conn_pool.with do |conn|
       # Reestablish connection if closed
-      unless conn.open?
-        conn.start
+      if !conn.open? && !conn.automatically_recover?
+        connect(conn)
       end
       # Return connection object
       conn
@@ -47,7 +47,17 @@ module SmartQue
       username: config.username,
       password: config.password
     )
-    conn.start
+    connect(conn)
+  end
+
+  # Start & Connect Bunny Session
+  def self.connect(session)
+    begin
+      session.start
+    rescue Bunny::TCPConnectionFailed => ex
+      log("Connection Failed: #{ex.message}")
+      raise ConnectionError
+    end
   end
 
   def self.fetch_parameters(parameter, options = {})
