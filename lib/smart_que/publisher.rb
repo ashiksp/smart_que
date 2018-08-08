@@ -43,11 +43,17 @@ module SmartQue
 
     # multicast message to queues based on topic subscription
     def multicast(topic, payload = {})
-      x_topic.publish(
-        payload.to_json,
-        routing_key: dot_formatted(topic)
-      )
-      log_message("multicast status: success, Topic : #{topic}, Content : #{payload}")
+      begin
+        x_topic.publish(
+          payload.to_json,
+          routing_key: dot_formatted(topic)
+        )
+        log_message("multicast status: success, Topic : #{topic}, Content : #{payload}")
+        :success
+      rescue => ex
+        log("#{ex.message}")
+        :error
+      end
     end
 
     # broadcast message to queues based on topic subscription
