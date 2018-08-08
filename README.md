@@ -34,6 +34,7 @@ RabbitMq server details and queue lists can be configured as follows
 
 ```
 # File: config/initializers/smart_que.rb
+require 'smart_que'
 
 SmartQue.configure do |f|
   f.host = ENV[:rabbit_mq][:host']
@@ -73,7 +74,7 @@ $publisher.unicast(queue_name, payload)
 
 The `unicast` method will provide an option to publish message to any queue which are
 not predefined with initialization configuration. The `queue_name` parameter can be any queue
-name, which will be created and bind to direct exchange instantly if doesn't exist.
+name, which will be created and bound to direct exchange instantly if doesn't exist.
 
 ```
 $publisher.unicast('sms_alert', { number: '+919898123123', message: 'Test Message' })
@@ -94,6 +95,20 @@ name.
 
 ```
 $publisher.multicast('weather', { message: 'Test Message' })
+```
+
+## SmartQue broadcast
+
+```
+$publisher.broadcast(payload)
+```
+
+The `broadcast` method will provide an option to broadcast message to queues which are
+not predefined with initialization configuration. The broadcst message will be consumable by
+all queues which are bound to rabbitmq fanout exchange.
+
+```
+$publisher.broadcast({ message: 'Broadcast Test Message' })
 ```
 
 
