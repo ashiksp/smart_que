@@ -6,10 +6,10 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 # Add required gems
-gem "bunny", '~> 2.11.0'
+gem "bunny", '~> 2.24.0'
 
 # Channel Connections
-gem "connection_pool", '~> 2.2.2'
+gem "connection_pool", '~> 2.5.4'
 
 gem "pry"
 gem 'guard'
